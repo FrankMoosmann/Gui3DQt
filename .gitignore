@@ -1,0 +1,7 @@
+*.o
+moc_*
+ui_*
+*.so*
+Makefile
+example/Makefile
+example/example
