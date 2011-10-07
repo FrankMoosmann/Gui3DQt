@@ -25,11 +25,10 @@ Compilation
 
 Installation
 ============
-Currently, this has to be done manually
-I recommend installing the headers into a separate directory, e.g. /usr/local/include/Gui3DQt/
-Thus, includes in your program will look like this: "#include <Gui3DQt/MainWindows.hpp>"
-The shared objects should be installed into the LD_LIBRARY_PATH, e.g. /usr/local/lib/
-Hint: sym-linking instead of copying the files helps keeping everything consistent!
+Just call the script "install.sh" with the destination directory as argument.
+The destination thereby has to include the subdirectories "lib" and "include".
+Of course, write access must be possible. E.g.:
+"sudo ./install.sh /usr/local"
 
 Usage
 =====
