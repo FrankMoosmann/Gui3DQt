@@ -3,6 +3,7 @@
 
 #include <Gui3DQt/Gui.hpp>
 #include <Gui3DQt/VisualizerGrid.hpp>
+#include <Gui3DQt/VisualizerCamControl.hpp>
 #include "Visualizer1.hpp"
 #include "Visualizer2.hpp"
 
@@ -28,6 +29,7 @@ int main(int argc, char *argv[])
   myGui.registerVisualizer(new VisualizerGrid(), "Ground Plane Grid"); // myGui will take ownership
   myGui.registerVisualizer(new Visualizer1(), "Visualizer 1"); // myGui will take ownership
   myGui.registerVisualizer(new Visualizer2(), "Visualizer 2"); // myGui will take ownership
+  myGui.registerVisualizer(new VisualizerCamControl(*myGui.getQGlWidget()), "Camera Control", MainWindow::VM_Plain); // myGui will take ownership
   myGui.exec();
   return 0;
 }

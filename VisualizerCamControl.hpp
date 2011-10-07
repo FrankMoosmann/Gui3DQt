@@ -22,10 +22,11 @@
 
 #include "Visualizer.hpp"
 #include "MNavWidget.hpp"
-#include "ui_VisualizerCamControl.h"
+
+namespace Ui { class VisualizerCamControlClass; } // forward declaration to avoid including the ui_ header
 
 namespace Gui3DQt {
-  
+
 class VisualizerCamControl : public Visualizer
 {
   Q_OBJECT
@@ -54,7 +55,7 @@ private:
   	return c;
   };
 
-  Ui::VisualizerCamControlClass ui;
+  Ui::VisualizerCamControlClass *ui;
   MNavWidget &mMav;
   std::vector<CamPos> camPositions;
   std::vector<CamPos> trajectory;
@@ -65,8 +66,8 @@ private:
   void generateLinearTrajectory(unsigned int startIdx, unsigned int endIdx, unsigned int trajSize);
   void generateSplineTrajectory(unsigned int startIdx, unsigned int endIdx, unsigned int trajSize);
   void updateSlider(); // update slider in case camPositions buffer changed
-  unsigned int getSliderIdx() {return ui.hsStorage->value()-1;}; // get current index on camPositions buffer from slider
-  void setSliderIdx(unsigned int idx) {ui.hsStorage->setValue(idx+1);}; // set slider position based on index on camPositions
+  unsigned int getSliderIdx(); // get current index on camPositions buffer from slider
+  void setSliderIdx(unsigned int idx); // set slider position based on index on camPositions
 
 private slots:
 //public slots:

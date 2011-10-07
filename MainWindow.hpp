@@ -23,7 +23,8 @@
 #include "MNavWidget.hpp"
 #include "Visualizer.hpp"
 
-#include "ui_MainWindow.h"
+namespace Ui { class MainWindowClass; } // forward declaration to avoid including the ui_ header
+
 
 namespace Gui3DQt {
 
@@ -41,22 +42,21 @@ public:
   enum GuiMode {GM_3D, GM_3D2D};
   enum VisualizerMode {VM_Plain, VM_Groupbox};
   
-  MainWindow(GuiMode gMode = GM_3D2D, VisualizerMode vMode = VM_Groupbox, QWidget *parent = 0);
+  MainWindow(GuiMode gMode = GM_3D2D, QWidget *parent = 0);
   virtual ~MainWindow();
 
-  void                    registerVisualizer(Visualizer*, std::string title); //!< called from extern to register a new Gui3DVisualizer (add to GUI and call their paint methods on redraws)
+  void                    registerVisualizer(Visualizer*, std::string title, VisualizerMode vMode = VM_Groupbox); //!< called from extern to register a new Gui3DVisualizer (add to GUI and call their paint methods on redraws)
   MNavWidget*             getMNavWidget();
 
 private:
   const static double     IMAGE_2D_ZOOM_FACTOR = 2.0;
-
+  
   // User Interface:
-  Ui::Gui3DMainWindowClass ui;
+  Ui::MainWindowClass     *ui;
   QBoxLayout              *controlParentLayout; // Horizontal Layout that can contain several vertical layouts
   QBoxLayout              *controlLayout; // current Vertical Layout
   MNavWidget              *glWid;
 	const GuiMode           guiMode;
-  const VisualizerMode    visuMode;
   QImage                  image2D;
   unsigned int            addedWidgets;
   float                   currImgScaleFactor;

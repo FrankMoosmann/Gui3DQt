@@ -4,7 +4,9 @@
 #include <fstream>
 #include <boost/foreach.hpp>
 #include <QFileDialog>
+
 #include "spline.hpp"
+#include "ui_VisualizerCamControl.h"
 
 using namespace std;
 using namespace magnet::math;
@@ -19,25 +21,26 @@ VisualizerCamControl::VisualizerCamControl(MNavWidget &mNav_, QWidget *parent)
   pilot->setSingleShot(false);
   connect(pilot, SIGNAL(timeout()), this, SLOT(flyToNextPos()) );
 
-	ui.setupUi(this);
-	ui.hsStorage->setMinimum(1);
+  ui = new Ui::VisualizerCamControlClass();
+  ui->setupUi(this);
+	ui->hsStorage->setMinimum(1);
   updateSlider();
   setSliderIdx(0);
 
-  connect(ui.pbSave, SIGNAL(pressed()), this, SLOT(saveCamBuff()) );
-  connect(ui.pbLoad, SIGNAL(pressed()), this, SLOT(loadCamBuff()) );
-	connect(ui.pbAdd, SIGNAL(pressed()), this, SLOT(addCamPos()) );
-  connect(ui.pbReplace, SIGNAL(pressed()), this, SLOT(replaceCamPos()) );
-  connect(ui.pbGoto, SIGNAL(pressed()), this, SLOT(camPosSelect()) );
-	connect(ui.pbClear, SIGNAL(pressed()), this, SLOT(clearCamPos()) );
-	connect(ui.pbLeft, SIGNAL(pressed()), this, SLOT(shiftLeft()) );
-	connect(ui.pbRight, SIGNAL(pressed()), this, SLOT(shiftRight()) );
-	connect(ui.pbRemove, SIGNAL(pressed()), this, SLOT(remCamPos()) );
-	connect(ui.hsStorage, SIGNAL(valueChanged(int)), this, SLOT(camPosSelect(int)) );
+  connect(ui->pbSave, SIGNAL(pressed()), this, SLOT(saveCamBuff()) );
+  connect(ui->pbLoad, SIGNAL(pressed()), this, SLOT(loadCamBuff()) );
+	connect(ui->pbAdd, SIGNAL(pressed()), this, SLOT(addCamPos()) );
+  connect(ui->pbReplace, SIGNAL(pressed()), this, SLOT(replaceCamPos()) );
+  connect(ui->pbGoto, SIGNAL(pressed()), this, SLOT(camPosSelect()) );
+	connect(ui->pbClear, SIGNAL(pressed()), this, SLOT(clearCamPos()) );
+	connect(ui->pbLeft, SIGNAL(pressed()), this, SLOT(shiftLeft()) );
+	connect(ui->pbRight, SIGNAL(pressed()), this, SLOT(shiftRight()) );
+	connect(ui->pbRemove, SIGNAL(pressed()), this, SLOT(remCamPos()) );
+	connect(ui->hsStorage, SIGNAL(valueChanged(int)), this, SLOT(camPosSelect(int)) );
 
-  connect(ui.pbSetStart, SIGNAL(pressed()), this, SLOT(setStartPos()) );
-  connect(ui.pbSetStop, SIGNAL(pressed()), this, SLOT(setEndPos()) );
-  connect(ui.pbFly, SIGNAL(toggled(bool)), this, SLOT(fly(bool)) );
+  connect(ui->pbSetStart, SIGNAL(pressed()), this, SLOT(setStartPos()) );
+  connect(ui->pbSetStop, SIGNAL(pressed()), this, SLOT(setEndPos()) );
+  connect(ui->pbFly, SIGNAL(toggled(bool)), this, SLOT(fly(bool)) );
 }
 
 
@@ -45,13 +48,24 @@ VisualizerCamControl::~VisualizerCamControl()
 {
 	pilot->stop();
 	//delete pilot; don't delete as parent will delete it automatically
+  delete ui;
 }
 
 void VisualizerCamControl::updateSlider()
 {
 	unsigned int cnt = camPositions.size();
-	ui.hsStorage->setMaximum(max(1u,cnt));
-	ui.hsStorage->setEnabled(camPositions.size() > 0);
+	ui->hsStorage->setMaximum(max(1u,cnt));
+	ui->hsStorage->setEnabled(camPositions.size() > 0);
+}
+
+unsigned int VisualizerCamControl::getSliderIdx()
+{
+  return ui->hsStorage->value()-1;
+}
+
+void VisualizerCamControl::setSliderIdx(unsigned int idx)
+{
+  ui->hsStorage->setValue(idx+1); 
 }
 
 void VisualizerCamControl::update3D()
@@ -188,35 +202,35 @@ void VisualizerCamControl::camPosSelect(int val)
 
 void VisualizerCamControl::setStartPos()
 {
-	ui.sbStart->setValue(ui.hsStorage->value());
+	ui->sbStart->setValue(ui->hsStorage->value());
 }
 
 void VisualizerCamControl::setEndPos()
 {
-	ui.sbStop->setValue(ui.hsStorage->value());
+	ui->sbStop->setValue(ui->hsStorage->value());
 }
 
 void VisualizerCamControl::fly(bool down)
 {
   if (down) {
   	trajectory.clear();
-		double stepTimeMS = (double)(ui.sbStepTime->value());
-		double totalTimeMS = (double)(ui.dsbDuration->value())*1000.0;
+		double stepTimeMS = (double)(ui->sbStepTime->value());
+		double totalTimeMS = (double)(ui->dsbDuration->value())*1000.0;
 		unsigned int trajSize = totalTimeMS/stepTimeMS;
 		unsigned int startIdx = 0;
-		if (ui.rbStartCurrent->isChecked())	startIdx = ui.hsStorage->value();
-		if (ui.rbStartFirst->isChecked())	startIdx = 1;
-		if (ui.rbStartLast->isChecked()) startIdx = ui.hsStorage->maximum();
-		if (ui.rbStartSpecific->isChecked()) startIdx = ui.sbStart->value();
+		if (ui->rbStartCurrent->isChecked())	startIdx = ui->hsStorage->value();
+		if (ui->rbStartFirst->isChecked())	startIdx = 1;
+		if (ui->rbStartLast->isChecked()) startIdx = ui->hsStorage->maximum();
+		if (ui->rbStartSpecific->isChecked()) startIdx = ui->sbStart->value();
 		unsigned int endIdx = 0;
-		if (ui.rbStopCurrent->isChecked())	endIdx = ui.hsStorage->value();
-		if (ui.rbStopFirst->isChecked())	endIdx = 1;
-		if (ui.rbStopLast->isChecked()) endIdx = ui.hsStorage->maximum();
-		if (ui.rbStopSpecific->isChecked()) endIdx = ui.sbStop->value();
+		if (ui->rbStopCurrent->isChecked())	endIdx = ui->hsStorage->value();
+		if (ui->rbStopFirst->isChecked())	endIdx = 1;
+		if (ui->rbStopLast->isChecked()) endIdx = ui->hsStorage->maximum();
+		if (ui->rbStopSpecific->isChecked()) endIdx = ui->sbStop->value();
 		// generate trajectory dependent on selected method
-		if (ui.rbInterpolLinear->isChecked())
+		if (ui->rbInterpolLinear->isChecked())
 			generateLinearTrajectory(startIdx-1, endIdx-1, trajSize);
-		if (ui.rbInterpolSpline->isChecked())
+		if (ui->rbInterpolSpline->isChecked())
 			generateSplineTrajectory(startIdx-1, endIdx-1, trajSize);
 	  //cout << endl << "generated trajectory with " << trajectory.size() << " elements, " << trajSize << " requested" << flush;
 		// start pilot
@@ -232,7 +246,7 @@ void VisualizerCamControl::fly(bool down)
 void VisualizerCamControl::flyToNextPos()
 {
 	if (trajectoryIdx >= trajectory.size()) {
-		ui.pbFly->setChecked(false); // this should deactivate timer
+		ui->pbFly->setChecked(false); // this should deactivate timer
 	} else {
 		// apply current trajectory position
 		CamPos &campos = trajectory[trajectoryIdx];
@@ -276,9 +290,9 @@ double at(vector<Spline> &splines, unsigned int d, double s) {
 void VisualizerCamControl::generateSplineTrajectory(unsigned int startIdx, unsigned int endIdx, unsigned int nbTarget)
 {
   const unsigned int nbSubintervalsPerInterval = 10;
-  const double offset = ui.dsbFixedWeight->value();
+  const double offset = ui->dsbFixedWeight->value();
   double weights[] = {1.0, 1.0, 0.7, 3.0, 3.0, 3.0}; //pan-tilt-range-x-y-z
-  for (int i=3; i<6; ++i) {weights[i] = ui.dsbTransWeight->value();};
+  for (int i=3; i<6; ++i) {weights[i] = ui->dsbTransWeight->value();};
   unsigned int nbGiven = endIdx-startIdx+1;
   unsigned int nbIntervals = nbTarget-1;
   unsigned int nbSubIntervals = nbSubintervalsPerInterval*nbIntervals;

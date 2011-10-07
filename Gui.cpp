@@ -7,12 +7,12 @@ using namespace std;
 
 namespace Gui3DQt {
   
-Gui::Gui(string title, int argc, char *argv[], MainWindow::GuiMode gMode, MainWindow::VisualizerMode vMode)
+Gui::Gui(string title, int argc, char *argv[], MainWindow::GuiMode gMode)
 {
   app = new QApplication(argc, argv);
   app->connect(app, SIGNAL(lastWindowClosed()), app, SLOT(quit()));
 
-  mainWin = new MainWindow(gMode, vMode);
+  mainWin = new MainWindow(gMode);
 
   mainWin->setWindowTitle(QString(title.c_str()));
   mainWin->show();
@@ -31,9 +31,9 @@ void Gui::exec()
 }
 
 
-void Gui::registerVisualizer(Visualizer *vis, std::string title)
+void Gui::registerVisualizer(Visualizer *vis, std::string title, MainWindow::VisualizerMode vMode)
 {
-  mainWin->registerVisualizer(vis, title);
+  mainWin->registerVisualizer(vis, title, vMode);
 }
 
 MNavWidget* Gui::getQGlWidget()
