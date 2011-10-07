@@ -24,7 +24,7 @@ void myWorkingThread()
 int main(int argc, char *argv[])
 {
   boost::thread wt(myWorkingThread);
-  Gui myGui("Example GUI", argc, argv, MainWindow::Mode3D);
+  Gui myGui("Example GUI", argc, argv, MainWindow::GM_3D);
   myGui.registerVisualizer(new VisualizerGrid(), "Ground Plane Grid"); // myGui will take ownership
   myGui.registerVisualizer(new Visualizer1(), "Visualizer 1"); // myGui will take ownership
   myGui.registerVisualizer(new Visualizer2(), "Visualizer 2"); // myGui will take ownership

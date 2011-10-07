@@ -38,9 +38,10 @@ class MainWindow : public QMainWindow
   Q_OBJECT
 
 public:
-  enum GuiMode {Mode3D, Mode3D2D};
-
-  MainWindow(GuiMode mode = Mode3D2D, QWidget *parent = 0);
+  enum GuiMode {GM_3D, GM_3D2D};
+  enum VisualizerMode {VM_Plain, VM_Groupbox};
+  
+  MainWindow(GuiMode gMode = GM_3D2D, VisualizerMode vMode = VM_Groupbox, QWidget *parent = 0);
   virtual ~MainWindow();
 
   void                    registerVisualizer(Visualizer*, std::string title); //!< called from extern to register a new Gui3DVisualizer (add to GUI and call their paint methods on redraws)
@@ -55,6 +56,7 @@ private:
   QBoxLayout              *controlLayout; // current Vertical Layout
   MNavWidget              *glWid;
 	const GuiMode           guiMode;
+  const VisualizerMode    visuMode;
   QImage                  image2D;
   unsigned int            addedWidgets;
   float                   currImgScaleFactor;

@@ -27,7 +27,7 @@ namespace Gui3DQt {
 class Gui
 {
 public:
-  Gui(std::string title, int argc, char *argv[], MainWindow::GuiMode mode = MainWindow::Mode3D2D);
+  Gui(std::string title, int argc, char *argv[], MainWindow::GuiMode gMode = MainWindow::GM_3D2D, MainWindow::VisualizerMode vMode = MainWindow::VM_Groupbox);
   virtual ~Gui();
 
   void registerVisualizer(Visualizer*, std::string title);

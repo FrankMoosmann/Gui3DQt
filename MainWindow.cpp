@@ -21,9 +21,10 @@ namespace Gui3DQt {
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
-MainWindow::MainWindow(GuiMode mode, QWidget *parent)
+MainWindow::MainWindow(GuiMode gMode, VisualizerMode vMode, QWidget *parent)
   : QMainWindow(parent)
-    ,guiMode(mode)
+    ,guiMode(gMode)
+    ,visuMode(vMode)
     ,image2D(0,0, QImage::Format_RGB16)
     ,addedWidgets(0)
     ,currImgScaleFactor(1.0)
@@ -35,7 +36,7 @@ MainWindow::MainWindow(GuiMode mode, QWidget *parent)
 {
   // create GUI and update labelings
   ui.setupUi(this);
-  if (guiMode == Mode3D) { // remove view of 2D image
+  if (guiMode == GM_3D) { // remove view of 2D image
     QList<int> vSizes; vSizes.push_back(100); vSizes.push_back(0);
     ui.splitter2D3D->setSizes( vSizes );
     ui.tabWidget->removeTab(1);
@@ -101,19 +102,29 @@ void MainWindow::registerVisualizer(Visualizer *vis, string title)
     controlParentLayout->addLayout(controlLayout);
     addedWidgets = vs.height();
   }
-  QGroupBox *frame = new QGroupBox();
-  frame->setTitle(QString(title.c_str()));
-  frame->setCheckable(true);
-  frame->setChecked(true);
-  QLayout *frameL = new QVBoxLayout();
-  frame->setLayout(frameL);
-  frameL->setSpacing(0);
-  frameL->setContentsMargins(0,0,0,0);
-  frameL->addWidget(vis);
-  controlLayout->insertWidget(controlLayout->count()-1, frame); // insert before spacer
-  QObject::connect( frame, SIGNAL(toggled(bool)), glWid, SLOT(updateGL()) );
+  QWidget *wAdd = NULL;
+  QGroupBox *frame = NULL;
+  switch (visuMode) {
+    case VM_Plain:
+      wAdd = vis;
+      break;
+    case VM_Groupbox:
+      frame = new QGroupBox();
+      frame->setTitle(QString(title.c_str()));
+      frame->setCheckable(true);
+      frame->setChecked(true);
+      QLayout *frameL = new QVBoxLayout();
+      frame->setLayout(frameL);
+      frameL->setSpacing(0);
+      frameL->setContentsMargins(0,0,0,0);
+      frameL->addWidget(vis);
+      QObject::connect( frame, SIGNAL(toggled(bool)), glWid, SLOT(updateGL()) );
+      wAdd = frame;
+      break;
+  }
+  controlLayout->insertWidget(controlLayout->count()-1, wAdd); // insert before spacer
   QObject::connect( vis, SIGNAL(stateChanged()), glWid, SLOT(updateGL()) );
-  if (guiMode == Mode3D2D)
+  if (guiMode == GM_3D2D)
     QObject::connect( vis, SIGNAL(redraw2D(QImage&)), this, SLOT(set2DImage(QImage&)) );
   visualizers.push_back(VisGroupbox(vis,frame));
   vis->show();
@@ -146,7 +157,7 @@ string MainWindow::getCurrentOutputFilename()
 void MainWindow::paintGLOpaque()
 {
   for (list<VisGroupbox>::iterator i=visualizers.begin(); i!=visualizers.end(); i++) {
-    if (i->second->isChecked())
+    if ((i->second == NULL) || (i->second->isChecked()))
       i->first->paintGLOpaque();
   }
 }
@@ -154,7 +165,7 @@ void MainWindow::paintGLOpaque()
 void MainWindow::paintGLTranslucent()
 {
   for (list<VisGroupbox>::iterator i=visualizers.begin(); i!=visualizers.end(); i++) {
-    if (i->second->isChecked())
+    if ((i->second == NULL) || (i->second->isChecked()))
       i->first->paintGLTranslucent();
   }
 }

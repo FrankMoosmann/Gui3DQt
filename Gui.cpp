@@ -7,12 +7,12 @@ using namespace std;
 
 namespace Gui3DQt {
   
-Gui::Gui(string title, int argc, char *argv[], MainWindow::GuiMode mode)
+Gui::Gui(string title, int argc, char *argv[], MainWindow::GuiMode gMode, MainWindow::VisualizerMode vMode)
 {
   app = new QApplication(argc, argv);
   app->connect(app, SIGNAL(lastWindowClosed()), app, SLOT(quit()));
 
-  mainWin = new MainWindow(mode);
+  mainWin = new MainWindow(gMode, vMode);
 
   mainWin->setWindowTitle(QString(title.c_str()));
   mainWin->show();
