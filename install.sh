@@ -40,16 +40,22 @@ HEADERS=`ls *.hpp`
 LIBS=`ls lib*.so*`
 CWD=`pwd`
 INCSUBDIR="Gui3DQt"
+LOGFILE="install_log"
+
+rm -f $LOGFILE # remove existing logfile
+
+for lib in $LIBS; do
+  echo "installing $lib"
+  ln -sf $CWD/$lib $PREFIX/lib/
+  echo $PREFIX/lib/$lib >> $LOGFILE
+done
 
 mkdir -p $PREFIX/include/$INCSUBDIR
 for header in $HEADERS; do
   echo "installing $header"
   ln -sf $CWD/$header $PREFIX/include/$INCSUBDIR/
+  echo $PREFIX/include/$INCSUBDIR/$header >> $LOGFILE
 done
-
-for lib in $LIBS; do
-  echo "installing $lib"
-  ln -sf $CWD/$lib $PREFIX/lib/
-done
+echo "$PREFIX/include/$INCSUBDIR" >> $LOGFILE
 
 echo "done"
