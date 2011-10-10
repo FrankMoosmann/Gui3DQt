@@ -17,7 +17,7 @@ FORMS += \
   Visualizer1.ui \
   Visualizer2.ui
 
-INCLUDEPATH += ../..
+INCLUDEPATH += .
 LIBS += \
   -L.. \
   -lGui3DQt \

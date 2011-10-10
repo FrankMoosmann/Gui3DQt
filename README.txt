@@ -35,3 +35,7 @@ Usage
 - Either just include a MNavWidget into your own Gui and provide OpenGL paint functions to it
 - Or create your own visualization modules for usage in a MainWindow (see VisualizerGrid or example/Visualizer*)
 
+In general, you should be familiar with Qt and OpenGL. If no, visit e.g. these pages:
+http://doc.qt.nokia.com/stable/tutorials.html
+http://wiki.delphigl.com/index.php/GlBegin (intended for Delphi, but same syntax in C++)
+
