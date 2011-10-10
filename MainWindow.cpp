@@ -5,6 +5,7 @@
 #include <QInputDialog>
 #include <QFileDialog>
 #include <QVBoxLayout>
+#include <QDesktopWidget>
 #include <boost/filesystem.hpp>
 #include <boost/algorithm/string/replace.hpp>
 #include <boost/format.hpp>
@@ -55,6 +56,7 @@ MainWindow::MainWindow(GuiMode gMode, QWidget *parent)
   controlLayout = new QVBoxLayout();
   controlLayout->setSpacing(0);
   controlLayout->setContentsMargins(0,0,0,0);
+  controlLayout->addStretch(1); // spacer at bottom of widget
   controlParentLayout->addLayout(controlLayout);
   // manually setup OpenGL Widget
   QGridLayout *glLayout = new QGridLayout();
@@ -95,9 +97,11 @@ MainWindow::~MainWindow()
 
 void MainWindow::registerVisualizer(Visualizer *vis, string title, VisualizerMode visuMode)
 {
+  QRect ds = QApplication::desktop()->screenGeometry(this);
   QSize vs = vis->sizeHint();
-  addedWidgets += vs.height();
-  if (addedWidgets > 1200) {
+	//cout << endl << "adding " << title << ", current count: " << controlLayout->count() << " size: " << addedWidgets + vs.height() << flush;
+	addedWidgets += vs.height();
+	if (addedWidgets > (unsigned int)ds.height()) {
     controlLayout = new QVBoxLayout();//(QBoxLayout::TopToBottom);
     controlLayout->setSpacing(0);
     controlLayout->setContentsMargins(0,0,0,0);

@@ -3,5 +3,6 @@ moc_*
 ui_*
 *.so*
 Makefile
+install_log
 example/Makefile
 example/example
