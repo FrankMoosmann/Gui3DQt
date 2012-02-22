@@ -12,20 +12,30 @@ QT += core \
 HEADERS += \
     graphics.hpp \
     spline.hpp \
-    MNavWidget.hpp \
+    models3d.hpp \
+    passatmodel.hpp \
     Gui.hpp \
     MainWindow.hpp \
+    MNavWidget.hpp \
     Visualizer.hpp \
+    VisualizerPassat.hpp \
     VisualizerCamControl.hpp \
     VisualizerGrid.hpp
 SOURCES += \
     graphics.cpp \
-    MNavWidget.cpp \
+    model3dpassat.cpp \
+    model3dpassatwagon.cpp \
+    model3dtire.cpp \
+    model3dvelodyne.cpp \
+    passatmodel.cpp \
     Gui.cpp \
     MainWindow.cpp \
+    MNavWidget.cpp \
+    VisualizerPassat.cpp \
     VisualizerCamControl.cpp \
     VisualizerGrid.cpp
 FORMS += \
+    VisualizerPassat.ui \
     VisualizerCamControl.ui \
     MainWindow.ui
 RESOURCES += 
