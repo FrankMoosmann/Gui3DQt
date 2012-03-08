@@ -45,7 +45,7 @@ VisualizerPassat::VisualizerPassat(double r, double g, double b, unsigned int mo
 	: Visualizer(parent)
   , veloTurner(this)
   , modelindex(modelindex_)
-  , veloAngleIncDEG(45)
+  , veloAngleIncDEG(-45) // turns clockwise, i.e. in mathematically negative direction
   , veloAngleUpMSec(100)
   , x(0)
   , y(0)
@@ -99,6 +99,7 @@ void VisualizerPassat::setPose(double newx, double newy, double newz, double new
 void VisualizerPassat::timerAction()
 {
   veloAngleDEG += veloAngleIncDEG;
+  if (veloAngleDEG < 0) veloAngleDEG += 360;
   if (veloAngleDEG >= 360) veloAngleDEG -= 360;
   emit stateChanged();
 }
