@@ -37,11 +37,16 @@ class VisualizerGrid : public Visualizer
 
 public:
   VisualizerGrid(QWidget *parent = 0);
+  VisualizerGrid(double x, double y, double z, double yawRad, QWidget *parent = 0);
   virtual ~VisualizerGrid();
 
   virtual void paintGLOpaque();
   virtual void paintGLTranslucent();
 
+  void setOrigin(double x, double y, double z, double yawRad); // specify center
+
+private:
+  double x, y, z, yawRad; // position of center
 private slots:
   void update();
 };

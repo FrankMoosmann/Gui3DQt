@@ -22,10 +22,17 @@
 #include "VisualizerGrid.hpp"
 #include "graphics.hpp"
 
+#include <cmath>
+
 namespace Gui3DQt {
   
 VisualizerGrid::VisualizerGrid(QWidget *parent)
-    : Visualizer(parent)
+    : Visualizer(parent), x(0), y(0), z(0), yawRad(0)
+{
+}
+
+VisualizerGrid::VisualizerGrid(double x_, double y_, double z_, double yawRad_, QWidget *parent)
+    : Visualizer(parent), x(x_), y(y_), z(z_), yawRad(yawRad_)
 {
 }
 
@@ -37,8 +44,12 @@ VisualizerGrid::~VisualizerGrid()
 
 void VisualizerGrid::paintGLOpaque()
 {
+  glPushMatrix();
+  glTranslatef(x, y, z);
+  glRotatef(yawRad/M_PI*180,0,0,1); // angle(DEG), x, y, z (rotation axis)
   Graphics::draw_grid(0,0);
   Graphics::draw_coordinate_frame(1.0);
+  glPopMatrix();
 }
 
 void VisualizerGrid::paintGLTranslucent()
@@ -47,6 +58,14 @@ void VisualizerGrid::paintGLTranslucent()
 
 void VisualizerGrid::update()
 {
+  emit stateChanged();
+}
+
+void VisualizerGrid::setOrigin(double x_, double y_, double z_, double yawRad_) {
+  x = x_;
+  y = y_;
+  z = z_;
+  yawRad = yawRad_;
   emit stateChanged();
 }
 
