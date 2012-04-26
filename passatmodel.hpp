@@ -28,6 +28,12 @@
 #ifndef PASSATMODEL_H
 #define PASSATMODEL_H
 
+#define _USE_MATH_DEFINES
+#include <math.h>
+
+#ifdef WIN32
+#include <windows.h>
+#endif
 #include <GL/gl.h>
 #include <GL/glu.h>
 

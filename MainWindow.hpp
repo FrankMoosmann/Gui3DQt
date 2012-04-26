@@ -27,7 +27,9 @@
 #define GUI3DQT_MAINWINDOW_HPP_
 
 #include <list>
-#include "boost/filesystem.hpp"
+
+#define BOOST_FILESYSTEM_VERSION 2
+#include <boost/filesystem.hpp>
 
 #include <QtGui/QMainWindow>
 #include <QtGui/QBoxLayout>
@@ -63,7 +65,7 @@ public:
   MNavWidget*             getMNavWidget();
 
 private:
-  const static double     IMAGE_2D_ZOOM_FACTOR = 2.0;
+  const static double     IMAGE_2D_ZOOM_FACTOR;
   
   // User Interface:
   Ui::MainWindowClass     *ui;

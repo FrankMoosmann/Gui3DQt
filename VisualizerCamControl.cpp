@@ -21,6 +21,7 @@
  */
 #include "VisualizerCamControl.hpp"
 
+#include <vector>
 #include <iostream>
 #include <fstream>
 #include <boost/foreach.hpp>
@@ -132,7 +133,7 @@ void VisualizerCamControl::loadCamBuff()
       istr >> p[4];
       istr >> p[5];
       camPositions.push_back(p);
-    } catch (exception &e) {
+    } catch (exception&) {
       break;
     }
   }
@@ -346,7 +347,7 @@ void VisualizerCamControl::generateSplineTrajectory(unsigned int startIdx, unsig
 
 
   // 2) create a sampled "maximum-delta-spline" from the single splines and calculate its integral
-  double maxDelta[nbSubIntervals];
+  vector<double> maxDelta(nbSubIntervals);
   double integral = 0.0;
   //cout << endl << "integrating over " << nbSubIntervals << " sections" << flush;
   for (unsigned int i=0; i<nbSubIntervals; ++i) {

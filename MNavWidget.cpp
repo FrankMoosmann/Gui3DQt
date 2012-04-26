@@ -27,6 +27,7 @@
 #include <math.h>
 #include <iostream>
 #include "graphics.hpp"
+#include <GL/glu.h>
 
 #define DEFAULT_ZOOM_SENSITIVITY             0.002
 #define DEFAULT_ROTATE_SENSITIVITY           0.30

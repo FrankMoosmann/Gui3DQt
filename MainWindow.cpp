@@ -44,6 +44,8 @@ namespace Gui3DQt {
 //////////////////     Constructor / Destructor        ///////////////////////
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
+	const double MainWindow::IMAGE_2D_ZOOM_FACTOR = 2.0;
+
 
 MainWindow::MainWindow(GuiMode gMode, QWidget *parent)
   : QMainWindow(parent)
@@ -179,7 +181,7 @@ string MainWindow::getCurrentOutputFilename()
     boost::replace_first(fName, "*", number);
     fullName = fs::path(imageOutputDirectory / fName);
   } while (exists(fullName));
-  return fullName.string();
+  return fullName.file_string();
 }
 
 void MainWindow::paintGLOpaque()
@@ -213,9 +215,9 @@ void MainWindow::afterGLPaint()
 void MainWindow::updateGUI()
 {
   string outputDirText = "Set Output Directory [" + imageOutputDirectory.string() + "]";
-  ui->actionSetOutputDirectory->setText(outputDirText.c_str());
+  //ui->actionSetOutputDirectory->setText(outputDirText.c_str());
   string outputPattern = "Set File Pattern [" + imageFilePattern + "]";
-  ui->actionSetFilePattern->setText(outputPattern.c_str());
+  //ui->actionSetFilePattern->setText(outputPattern.c_str());
 }
 
 void MainWindow::setScaledImage(float factor)

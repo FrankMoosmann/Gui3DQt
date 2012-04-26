@@ -4,6 +4,9 @@ Copyright (C) 1999-2006 Right Hemisphere
 Mail support@righthemisphere.com for support.
 Visit http://www.righthemisphere.com/dexp.htm for updates.
 */
+#ifdef WIN32
+#include <windows.h>
+#endif
 #include <GL/gl.h>
 #include <GL/glu.h>
 

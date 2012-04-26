@@ -1,9 +1,9 @@
 TEMPLATE = lib
 #CONFIG += staticlib
-CONFIG -= debug_and_release
+
+#CONFIG -= debug_and_release
 #CONFIG += debug
 CONFIG += release
-QMAKE_CXXFLAGS_RELEASE += -O3
 VERSION = 0.1
 TARGET = Gui3DQt
 QT += core \
@@ -39,7 +39,9 @@ FORMS += \
     VisualizerCamControl.ui \
     MainWindow.ui
 RESOURCES += 
+INCLUDEPATH += $(BOOST_INC)
 LIBS += \
+    -L$(BOOST_LIB) \
     -lboost_filesystem \
     -lboost_system \
     -lglut

@@ -21,13 +21,13 @@
  */
 #include "graphics.hpp"
 
+#define _USE_MATH_DEFINES
+
 #include <GL/glut.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 #include <string.h>
-
-using namespace std;
 
 namespace Gui3DQt {
 namespace Graphics {
@@ -300,7 +300,7 @@ void draw_dashed_line(double x1, double y1, double x2,
   double frac, dx, dy, x, y;
   int i;
 
-  frac = stripe_len / hypot(x2 - x1, y2 - y1);
+  frac = stripe_len / _hypot(x2 - x1, y2 - y1);
   dx = frac * (x2 - x1);
   dy = frac * (y2 - y1);
   x = x1;

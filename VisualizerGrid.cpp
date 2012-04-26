@@ -24,6 +24,9 @@
 
 #include <cmath>
 
+#define _USE_MATH_DEFINES
+#include <math.h>
+
 namespace Gui3DQt {
   
 VisualizerGrid::VisualizerGrid(QWidget *parent)

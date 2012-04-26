@@ -7,17 +7,25 @@
 #include "Visualizer1.hpp"
 #include "Visualizer2.hpp"
 
+#ifdef WIN32
+#include <windows.h>
+#endif
+
 using namespace std;
 using namespace Gui3DQt;
 
 void myWorkingThread()
 {
   cout << "entering working thread" << endl;
+#ifndef WIN32
   sleep(3);
+#endif
   cout << "start working" << flush;
   for (unsigned int i=0; i<10; i++) {
     cout << "." << flush;
+#ifndef WIN32
     sleep(1);
+#endif
   } 
   cout << "working finished" << endl;
 }
