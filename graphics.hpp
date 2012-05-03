@@ -65,7 +65,8 @@ namespace Graphics {
   void draw_observed_car(double x, double y, double theta, double w, double l, int id, double v, int draw_flag, double x_var, double y_var, int tracking_state, int lane, double confidence, int published, double camera_pan);
   void draw_distance_rings(double x, double y, double theta, int max_distance, int distance_increment);
   void draw_grid(double center_x, double center_y);
-  void draw_cube(float x1,float x2,float y1,float y2,float z1,float z2, float r, float g, float b, float alpha);
+  void draw_cube_solid(float x1,float x2,float y1,float y2,float z1,float z2); // it is required that x1<x2, y1<y2, z1<z2!
+  void draw_cube_cage(float x1,float x2,float y1,float y2,float z1,float z2);
 
 }
 }

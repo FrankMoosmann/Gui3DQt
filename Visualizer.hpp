@@ -74,6 +74,11 @@ public:
           glColor3f(r/255.0f,g/255.0f,b/255.0f); // color according to "speed"
   }
 
+  inline void glColorHSV(int H, int S, int V, float alpha) { // H = 0..360; S,V=0..255,alpha=0..1
+          int r,g,b; HSV2RGB(H, S, V, r,g,b);
+          glColor4f(r/255.0f,g/255.0f,b/255.0f,alpha); // color according to "speed"
+  }
+
 signals:
 	void stateChanged(); //!< emit this signal when state of the visualizer changes and thus a GL redraw is necessary (in return the above paintGL methods will be called)
   void redraw2D(QImage&); //!< emit this signal to redraw the 2D image

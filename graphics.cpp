@@ -852,82 +852,46 @@ void draw_grid(double center_x, double center_y)
 
 
 // it is required that x1<x2, y1<y2, z1<z2!
-void draw_cube(float x1,float x2,float y1,float y2,float z1,float z2, float r, float g, float b, float alpha)
+void draw_cube_solid(float x1,float x2,float y1,float y2,float z1,float z2)
 {
-	  glColor4f(r, g, b, alpha);
+  glEnable(GL_CULL_FACE);
+  glCullFace(GL_FRONT);
+  glBegin(GL_QUADS);  //front side is defined as side where points are in counter-clock-wise direction - only with GL_QUADS, here it's 1,2,4,3 - 3,4,6,5
+    glVertex3f(x1, y1, z1); //x,y,z
+    glVertex3f(x2, y1, z1); //x,y,z
+    glVertex3f(x2, y2, z1); //x,y,z
+    glVertex3f(x1, y2, z1); //x,y,z
 
-/*    GLUquadricObj *quadric = gluNewQuadric();
-    gluQuadricDrawStyle(quadric, GLU_FILL);     // rendering style of the quadric (GLU_POINT, GLU_LINE, GLU_FILL or GLU_SILHOUETTE), default: GLU_FILL
-    glPushMatrix();
-    glTranslatef(x1, y1, z1); // move coord sys to point location
-    gluCylinder(quadric, x2-x1, x2-x1, z2-z1, 4, 2); //quadObject, baseRadius, topRadius, height, slices (around z-axis), stacks (along z-axis)
-    glPopMatrix();
-    gluDeleteQuadric(quadric);
-*/
+    glVertex3f(x1, y2, z1); //x,y,z
+    glVertex3f(x2, y2, z1); //x,y,z
+    glVertex3f(x2, y2, z2); //x,y,z
+    glVertex3f(x1, y2, z2); //x,y,z
 
-/*	  glCullFace(GL_BACK);
-    glEnable(GL_CULL_FACE);
-		glBegin(GL_QUAD_STRIP);  //front side is defined as side where points are in counter-clock-wise direction - only with GL_QUADS, here it's 1,2,4,3 - 3,4,6,5
-		  glVertex3f(x1, y1, z1); //x,y,z
-		  glVertex3f(x2, y1, z1); //x,y,z
-		  glVertex3f(x1, y2, z1); //x,y,z
-		  glVertex3f(x2, y2, z1); //x,y,z
-		  glVertex3f(x1, y2, z2); //x,y,z
-		  glVertex3f(x2, y2, z2); //x,y,z
-		  glVertex3f(x1, y1, z2); //x,y,z
-		  glVertex3f(x2, y1, z2); //x,y,z
-		  glVertex3f(x1, y1, z1); //x,y,z
-		  glVertex3f(x2, y1, z1); //x,y,z
-	  glEnd();
-		glBegin(GL_QUADS);
-		  glVertex3f(x1, y1, z1); //x,y,z
-		  glVertex3f(x1, y2, z1); //x,y,z
-		  glVertex3f(x1, y2, z2); //x,y,z
-		  glVertex3f(x1, y1, z2); //x,y,z
-		  glVertex3f(x2, y2, z1); //x,y,z
-		  glVertex3f(x2, y1, z1); //x,y,z
-		  glVertex3f(x2, y1, z2); //x,y,z
-		  glVertex3f(x2, y2, z2); //x,y,z
-	  glEnd();
-    glDisable(GL_CULL_FACE);
-*/
-  
-    glEnable(GL_CULL_FACE);
-    glCullFace(GL_FRONT);
-    glBegin(GL_QUADS);  //front side is defined as side where points are in counter-clock-wise direction - only with GL_QUADS, here it's 1,2,4,3 - 3,4,6,5
-      glVertex3f(x1, y1, z1); //x,y,z
-      glVertex3f(x2, y1, z1); //x,y,z
-      glVertex3f(x2, y2, z1); //x,y,z
-      glVertex3f(x1, y2, z1); //x,y,z
+    glVertex3f(x1, y2, z2); //x,y,z
+    glVertex3f(x2, y2, z2); //x,y,z
+    glVertex3f(x2, y1, z2); //x,y,z
+    glVertex3f(x1, y1, z2); //x,y,z
 
-      glVertex3f(x1, y2, z1); //x,y,z
-      glVertex3f(x2, y2, z1); //x,y,z
-      glVertex3f(x2, y2, z2); //x,y,z
-      glVertex3f(x1, y2, z2); //x,y,z
+    glVertex3f(x1, y1, z2); //x,y,z
+    glVertex3f(x2, y1, z2); //x,y,z
+    glVertex3f(x2, y1, z1); //x,y,z
+    glVertex3f(x1, y1, z1); //x,y,z
 
-      glVertex3f(x1, y2, z2); //x,y,z
-      glVertex3f(x2, y2, z2); //x,y,z
-      glVertex3f(x2, y1, z2); //x,y,z
-      glVertex3f(x1, y1, z2); //x,y,z
+    glVertex3f(x1, y1, z1); //x,y,z
+    glVertex3f(x1, y2, z1); //x,y,z
+    glVertex3f(x1, y2, z2); //x,y,z
+    glVertex3f(x1, y1, z2); //x,y,z
 
-      glVertex3f(x1, y1, z2); //x,y,z
-      glVertex3f(x2, y1, z2); //x,y,z
-      glVertex3f(x2, y1, z1); //x,y,z
-      glVertex3f(x1, y1, z1); //x,y,z
+    glVertex3f(x2, y2, z1); //x,y,z
+    glVertex3f(x2, y1, z1); //x,y,z
+    glVertex3f(x2, y1, z2); //x,y,z
+    glVertex3f(x2, y2, z2); //x,y,z
+  glEnd();
+  glDisable(GL_CULL_FACE);
+}
 
-      glVertex3f(x1, y1, z1); //x,y,z
-      glVertex3f(x1, y2, z1); //x,y,z
-      glVertex3f(x1, y2, z2); //x,y,z
-      glVertex3f(x1, y1, z2); //x,y,z
-
-      glVertex3f(x2, y2, z1); //x,y,z
-      glVertex3f(x2, y1, z1); //x,y,z
-      glVertex3f(x2, y1, z2); //x,y,z
-      glVertex3f(x2, y2, z2); //x,y,z
-    glEnd();
-    glDisable(GL_CULL_FACE);
-  
-  glColor4f( 0.8, 0.8, 0.8, alpha/2); //const grey color for lines
+void draw_cube_cage(float x1,float x2,float y1,float y2,float z1,float z2)
+{
 	glBegin(GL_LINE_STRIP);
 	  glVertex3f(x1, y1, z1); //x,y,z
 	  glVertex3f(x1, y2, z1); //x,y,z
