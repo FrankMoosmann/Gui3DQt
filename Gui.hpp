@@ -45,7 +45,7 @@ public:
   Gui(std::string title, int argc, char *argv[], MainWindow::GuiMode gMode = MainWindow::GM_3D2D);
   virtual ~Gui();
 
-  void registerVisualizer(Visualizer*, std::string title, MainWindow::VisualizerMode vMode = MainWindow::VM_Groupbox);
+  void registerVisualizer(Visualizer*, std::string title, MainWindow::VisualizerMode vMode = MainWindow::VM_Groupbox, bool active = true);
   MNavWidget* getQGlWidget();
   void exec();
   

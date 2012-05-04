@@ -52,9 +52,9 @@ void Gui::exec()
 }
 
 
-void Gui::registerVisualizer(Visualizer *vis, std::string title, MainWindow::VisualizerMode vMode)
+void Gui::registerVisualizer(Visualizer *vis, std::string title, MainWindow::VisualizerMode vMode, bool active)
 {
-  mainWin->registerVisualizer(vis, title, vMode);
+  mainWin->registerVisualizer(vis, title, vMode, active);
 }
 
 MNavWidget* Gui::getQGlWidget()

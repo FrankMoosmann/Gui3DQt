@@ -61,7 +61,7 @@ public:
   MainWindow(GuiMode gMode = GM_3D2D, QWidget *parent = 0);
   virtual ~MainWindow();
 
-  void                    registerVisualizer(Visualizer*, std::string title, VisualizerMode vMode = VM_Groupbox); //!< called from extern to register a new Gui3DVisualizer (add to GUI and call their paint methods on redraws)
+  void                    registerVisualizer(Visualizer*, std::string title, VisualizerMode vMode = VM_Groupbox, bool active = true); //!< called from extern to register a new Visualizer (add to GUI and call their paint methods on redraws)
   MNavWidget*             getMNavWidget();
 
 private:

@@ -118,20 +118,8 @@ MainWindow::~MainWindow()
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
-void MainWindow::registerVisualizer(Visualizer *vis, string title, VisualizerMode visuMode)
+void MainWindow::registerVisualizer(Visualizer *vis, string title, VisualizerMode visuMode, bool active)
 {
-  QRect ds = QApplication::desktop()->screenGeometry(this);
-  QSize vs = vis->sizeHint();
-	//cout << endl << "adding " << title << ", current count: " << controlLayout->count() << " size: " << addedWidgets + vs.height() << flush;
-	addedWidgets += vs.height();
-	if (addedWidgets > (unsigned int)ds.height()) {
-    controlLayout = new QVBoxLayout();//(QBoxLayout::TopToBottom);
-    controlLayout->setSpacing(0);
-    controlLayout->setContentsMargins(0,0,0,0);
-    controlLayout->addStretch(1); // spacer at bottom of widget
-    controlParentLayout->addLayout(controlLayout);
-    addedWidgets = vs.height();
-  }
   QWidget *wAdd = NULL;
   QGroupBox *frame = NULL;
   switch (visuMode) {
@@ -142,7 +130,7 @@ void MainWindow::registerVisualizer(Visualizer *vis, string title, VisualizerMod
       frame = new QGroupBox();
       frame->setTitle(QString(title.c_str()));
       frame->setCheckable(true);
-      frame->setChecked(true);
+      frame->setChecked(active);
       QLayout *frameL = new QVBoxLayout();
       frame->setLayout(frameL);
       frameL->setSpacing(0);
@@ -151,6 +139,18 @@ void MainWindow::registerVisualizer(Visualizer *vis, string title, VisualizerMod
       QObject::connect( frame, SIGNAL(toggled(bool)), glWid, SLOT(updateGL()) );
       wAdd = frame;
       break;
+  }
+  QRect ds = QApplication::desktop()->screenGeometry(this);
+  QSize vs = wAdd->sizeHint();
+  //cout << endl << "adding " << title << ", current count: " << controlLayout->count() << " size: " << addedWidgets + vs.height() << flush;
+  addedWidgets += vs.height();
+  if (addedWidgets > (unsigned int)ds.height()) {
+    controlLayout = new QVBoxLayout();//(QBoxLayout::TopToBottom);
+    controlLayout->setSpacing(0);
+    controlLayout->setContentsMargins(0,0,0,0);
+    controlLayout->addStretch(1); // spacer at bottom of widget
+    controlParentLayout->addLayout(controlLayout);
+    addedWidgets = vs.height();
   }
   controlLayout->insertWidget(controlLayout->count()-1, wAdd); // insert before spacer
   QObject::connect( vis, SIGNAL(stateChanged()), glWid, SLOT(updateGL()) );
