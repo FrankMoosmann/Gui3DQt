@@ -42,7 +42,7 @@ namespace Gui3DQt {
 class Gui
 {
 public:
-  Gui(std::string title, int argc, char *argv[], MainWindow::GuiMode gMode = MainWindow::GM_3D2D);
+  Gui(std::string title, int argc, char *argv[], MainWindow::GuiMode gMode = MainWindow::GM_3D2D, bool maximized = false);
   virtual ~Gui();
 
   void registerVisualizer(Visualizer*, std::string title, MainWindow::VisualizerMode vMode = MainWindow::VM_Groupbox, bool active = true);

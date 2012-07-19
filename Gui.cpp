@@ -28,7 +28,7 @@ using namespace std;
 
 namespace Gui3DQt {
   
-Gui::Gui(string title, int argc, char *argv[], MainWindow::GuiMode gMode)
+Gui::Gui(string title, int argc, char *argv[], MainWindow::GuiMode gMode, bool maximized)
 {
   app = new QApplication(argc, argv);
   app->connect(app, SIGNAL(lastWindowClosed()), app, SLOT(quit()));
@@ -36,7 +36,10 @@ Gui::Gui(string title, int argc, char *argv[], MainWindow::GuiMode gMode)
   mainWin = new MainWindow(gMode);
 
   mainWin->setWindowTitle(QString(title.c_str()));
-  mainWin->show();
+  if (maximized)
+    mainWin->showMaximized();
+  else
+    mainWin->show();
 }
 
 Gui::~Gui()
