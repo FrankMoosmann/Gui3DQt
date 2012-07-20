@@ -63,6 +63,10 @@ public:
 
   void                    registerVisualizer(Visualizer*, std::string title, VisualizerMode vMode = VM_Groupbox, bool active = true); //!< called from extern to register a new Visualizer (add to GUI and call their paint methods on redraws)
   MNavWidget*             getMNavWidget();
+  
+  void                    setImageOutputDir(std::string dir);
+  void                    setControlPanelVisible(bool);
+  void                    setGrabbingActive(bool);
 
 private:
   const static double     IMAGE_2D_ZOOM_FACTOR;
@@ -72,7 +76,7 @@ private:
   QBoxLayout              *controlParentLayout; // Horizontal Layout that can contain several vertical layouts
   QBoxLayout              *controlLayout; // current Vertical Layout
   MNavWidget              *glWid;
-	const GuiMode           guiMode;
+  const GuiMode           guiMode;
   QImage                  image2D;
   unsigned int            addedWidgets;
   float                   currImgScaleFactor;

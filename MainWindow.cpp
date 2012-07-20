@@ -290,9 +290,20 @@ void MainWindow::changeView2D3D()
   ui->tabWidget->setCurrentIndex(1-ui->tabWidget->currentIndex());
 }
 
+void MainWindow::setControlPanelVisible(bool flag)
+{
+  ui->controlsPlaceholder->setVisible(flag);
+}
+
 void MainWindow::showHideControlPanel()
 {
   ui->controlsPlaceholder->setVisible(!ui->controlsPlaceholder->isVisible());
+}
+
+void MainWindow::setImageOutputDir(string dir)
+{
+  imageOutputDirectory = fs::path(dir);
+  updateGUI();
 }
 
 void MainWindow::setImageOutputDir()
@@ -302,8 +313,7 @@ void MainWindow::setImageOutputDir()
   dialog.setDirectory(imageOutputDirectory.string().c_str());
   //dialog.setLabelText(tr("Set Output Directory"));
   if (dialog.exec()) {
-    imageOutputDirectory = fs::path(dialog.selectedFiles().at(0).toStdString());
-    updateGUI();
+    setImageOutputDir(dialog.selectedFiles().at(0).toStdString());
   }
 }
 
@@ -314,6 +324,11 @@ void MainWindow::setImageFilePattern()
   if (ok && !text.isEmpty())
     imageFilePattern = text.toStdString();
   updateGUI();
+}
+
+void MainWindow::setGrabbingActive(bool flag)
+{
+  ui->actionGrab->setChecked(flag);
 }
 
 void MainWindow::startStopGrabbing(bool grab)

@@ -65,4 +65,9 @@ MNavWidget* Gui::getQGlWidget()
   return mainWin->getMNavWidget();
 }
 
+MainWindow* Gui::getMainWindow()
+{
+  return mainWin;
+}
+
 }

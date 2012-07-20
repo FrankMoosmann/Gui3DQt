@@ -52,6 +52,8 @@ public:
   virtual void paintGLOpaque() {};
   virtual void paintGLTranslucent() {};
 
+  void loadCamBuff(std::string filename);
+  
 private:
 //  struct CamPos {
 //  	double pan;
@@ -83,8 +85,10 @@ private:
   unsigned int getSliderIdx(); // get current index on camPositions buffer from slider
   void setSliderIdx(unsigned int idx); // set slider position based on index on camPositions
 
+public slots:
+  void camPosSelect(int val = 0);
+
 private slots:
-//public slots:
   void update3D();
 
   void saveCamBuff();
@@ -95,7 +99,6 @@ private slots:
   void clearCamPos();
   void shiftLeft();
   void shiftRight();
-  void camPosSelect(int val = 0);
   void setStartPos();
   void setEndPos();
   void fly(bool down);

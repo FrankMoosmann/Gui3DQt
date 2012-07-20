@@ -36,8 +36,8 @@ using namespace magnet::math;
 namespace Gui3DQt {
   
 VisualizerCamControl::VisualizerCamControl(MNavWidget &mNav_, QWidget *parent)
-	: Visualizer(parent)
-	, mMav(mNav_)
+  : Visualizer(parent)
+  , mMav(mNav_)
 {
   pilot = new QTimer(this);
   pilot->setSingleShot(false);
@@ -45,20 +45,20 @@ VisualizerCamControl::VisualizerCamControl(MNavWidget &mNav_, QWidget *parent)
 
   ui = new Ui::VisualizerCamControlClass();
   ui->setupUi(this);
-	ui->hsStorage->setMinimum(1);
+  ui->hsStorage->setMinimum(1);
   updateSlider();
   setSliderIdx(0);
 
   connect(ui->pbSave, SIGNAL(pressed()), this, SLOT(saveCamBuff()) );
   connect(ui->pbLoad, SIGNAL(pressed()), this, SLOT(loadCamBuff()) );
-	connect(ui->pbAdd, SIGNAL(pressed()), this, SLOT(addCamPos()) );
+  connect(ui->pbAdd, SIGNAL(pressed()), this, SLOT(addCamPos()) );
   connect(ui->pbReplace, SIGNAL(pressed()), this, SLOT(replaceCamPos()) );
   connect(ui->pbGoto, SIGNAL(pressed()), this, SLOT(camPosSelect()) );
-	connect(ui->pbClear, SIGNAL(pressed()), this, SLOT(clearCamPos()) );
-	connect(ui->pbLeft, SIGNAL(pressed()), this, SLOT(shiftLeft()) );
-	connect(ui->pbRight, SIGNAL(pressed()), this, SLOT(shiftRight()) );
-	connect(ui->pbRemove, SIGNAL(pressed()), this, SLOT(remCamPos()) );
-	connect(ui->hsStorage, SIGNAL(valueChanged(int)), this, SLOT(camPosSelect(int)) );
+  connect(ui->pbClear, SIGNAL(pressed()), this, SLOT(clearCamPos()) );
+  connect(ui->pbLeft, SIGNAL(pressed()), this, SLOT(shiftLeft()) );
+  connect(ui->pbRight, SIGNAL(pressed()), this, SLOT(shiftRight()) );
+  connect(ui->pbRemove, SIGNAL(pressed()), this, SLOT(remCamPos()) );
+  connect(ui->hsStorage, SIGNAL(valueChanged(int)), this, SLOT(camPosSelect(int)) );
 
   connect(ui->pbSetStart, SIGNAL(pressed()), this, SLOT(setStartPos()) );
   connect(ui->pbSetStop, SIGNAL(pressed()), this, SLOT(setEndPos()) );
@@ -68,16 +68,16 @@ VisualizerCamControl::VisualizerCamControl(MNavWidget &mNav_, QWidget *parent)
 
 VisualizerCamControl::~VisualizerCamControl()
 {
-	pilot->stop();
-	//delete pilot; don't delete as parent will delete it automatically
+  pilot->stop();
+  //delete pilot; don't delete as parent will delete it automatically
   delete ui;
 }
 
 void VisualizerCamControl::updateSlider()
 {
-	unsigned int cnt = camPositions.size();
-	ui->hsStorage->setMaximum(max(1u,cnt));
-	ui->hsStorage->setEnabled(camPositions.size() > 0);
+  unsigned int cnt = camPositions.size();
+  ui->hsStorage->setMaximum(max(1u,cnt));
+  ui->hsStorage->setEnabled(camPositions.size() > 0);
 }
 
 unsigned int VisualizerCamControl::getSliderIdx()
@@ -110,13 +110,9 @@ void VisualizerCamControl::saveCamBuff()
   update3D();
 }
 
-void VisualizerCamControl::loadCamBuff()
+void VisualizerCamControl::loadCamBuff(string filename)
 {
-  QString file = QFileDialog::getOpenFileName(this, "Load camera buffer", lastFilePath, "Camera buffer file (*.cam)");
-  if (file.isEmpty()) return;
-  lastFilePath = file.section('/', 0, -2);
-  cout << endl << "loading cambuffer from " << file.toStdString() << "..." << flush;
-  ifstream in(file.toStdString().c_str());
+  ifstream in(filename.c_str());
   if (!in.good())
     throw runtime_error("VisualizerCamControl::loadCamBuff: problem opening the file for reading");
   camPositions.clear();
@@ -143,19 +139,28 @@ void VisualizerCamControl::loadCamBuff()
   update3D();
 }
 
+void VisualizerCamControl::loadCamBuff()
+{
+  QString file = QFileDialog::getOpenFileName(this, "Load camera buffer", lastFilePath, "Camera buffer file (*.cam)");
+  if (file.isEmpty()) return;
+  lastFilePath = file.section('/', 0, -2);
+  cout << endl << "loading cambuffer from " << file.toStdString() << "..." << flush;
+  loadCamBuff(file.toStdString());
+}
+
 void VisualizerCamControl::addCamPos()
 {
-	unsigned int idx = getSliderIdx(); // --> camPositions[idx]
-	double pan, tilt, range, x_offset, y_offset, z_offset;
-	mMav.getCameraPos(pan, tilt, range, x_offset, y_offset, z_offset);
-	if (camPositions.empty())
-		camPositions.push_back(camPos(pan, tilt, range, x_offset, y_offset, z_offset));
-	else
-		camPositions.insert(camPositions.begin()+idx+1, camPos(pan, tilt, range, x_offset, y_offset, z_offset));
-	updateSlider();
-//	if (getSliderIdx() == (int)camPositions.size()-1) // last pose was selected -> increment
-	//setSliderIdx(camPositions.size()-1);
-	setSliderIdx(idx+1);
+  unsigned int idx = getSliderIdx(); // --> camPositions[idx]
+  double pan, tilt, range, x_offset, y_offset, z_offset;
+  mMav.getCameraPos(pan, tilt, range, x_offset, y_offset, z_offset);
+  if (camPositions.empty())
+    camPositions.push_back(camPos(pan, tilt, range, x_offset, y_offset, z_offset));
+  else
+    camPositions.insert(camPositions.begin()+idx+1, camPos(pan, tilt, range, x_offset, y_offset, z_offset));
+  updateSlider();
+//  if (getSliderIdx() == (int)camPositions.size()-1) // last pose was selected -> increment
+  //setSliderIdx(camPositions.size()-1);
+  setSliderIdx(idx+1);
 }
 
 void VisualizerCamControl::replaceCamPos()
@@ -172,131 +177,131 @@ void VisualizerCamControl::replaceCamPos()
 
 void VisualizerCamControl::remCamPos()
 {
-	if (camPositions.empty())
-		return;
-	camPositions.erase(camPositions.begin()+getSliderIdx());
-	updateSlider();
+  if (camPositions.empty())
+    return;
+  camPositions.erase(camPositions.begin()+getSliderIdx());
+  updateSlider();
 }
 
 void VisualizerCamControl::clearCamPos()
 {
-	camPositions.clear();
-	updateSlider();
+  camPositions.clear();
+  updateSlider();
 }
 
 void VisualizerCamControl::shiftLeft()
 {
-	if (camPositions.empty())
-		return;
-	unsigned int idx = getSliderIdx(); // --> camPositions[idx]
-	if (idx == 0) // already first
-		return;
-	CamPos tmp = camPositions[idx];
-	camPositions[idx] = camPositions[idx-1];
-	camPositions[idx-1] = tmp;
-	setSliderIdx(idx-1);
+  if (camPositions.empty())
+    return;
+  unsigned int idx = getSliderIdx(); // --> camPositions[idx]
+  if (idx == 0) // already first
+    return;
+  CamPos tmp = camPositions[idx];
+  camPositions[idx] = camPositions[idx-1];
+  camPositions[idx-1] = tmp;
+  setSliderIdx(idx-1);
 }
 
 void VisualizerCamControl::shiftRight()
 {
-	if (camPositions.empty())
-		return;
-	unsigned int idx = getSliderIdx(); // --> camPositions[idx]
-	if (idx == camPositions.size()-1) // already last
-		return;
-	CamPos tmp = camPositions[idx];
-	camPositions[idx] = camPositions[idx+1];
-	camPositions[idx+1] = tmp;
-	setSliderIdx(idx+1);
+  if (camPositions.empty())
+    return;
+  unsigned int idx = getSliderIdx(); // --> camPositions[idx]
+  if (idx == camPositions.size()-1) // already last
+    return;
+  CamPos tmp = camPositions[idx];
+  camPositions[idx] = camPositions[idx+1];
+  camPositions[idx+1] = tmp;
+  setSliderIdx(idx+1);
 }
 
 void VisualizerCamControl::camPosSelect(int val)
 {
-	if (camPositions.empty())
-		return;
-	(void)val;
-	unsigned int idx = getSliderIdx(); // val-1
-	CamPos &campos = camPositions[idx];
-	mMav.setCameraPos(campos[0], campos[1], campos[2], campos[3], campos[4], campos[5]);
-	// apply selected camera pose to current visualization
-	update3D();
+  if (camPositions.empty())
+    return;
+  (void)val;
+  unsigned int idx = getSliderIdx(); // val-1
+  CamPos &campos = camPositions[idx];
+  mMav.setCameraPos(campos[0], campos[1], campos[2], campos[3], campos[4], campos[5]);
+  // apply selected camera pose to current visualization
+  update3D();
 }
 
 void VisualizerCamControl::setStartPos()
 {
-	ui->sbStart->setValue(ui->hsStorage->value());
+  ui->sbStart->setValue(ui->hsStorage->value());
 }
 
 void VisualizerCamControl::setEndPos()
 {
-	ui->sbStop->setValue(ui->hsStorage->value());
+  ui->sbStop->setValue(ui->hsStorage->value());
 }
 
 void VisualizerCamControl::fly(bool down)
 {
   if (down) {
-  	trajectory.clear();
-		double stepTimeMS = (double)(ui->sbStepTime->value());
-		double totalTimeMS = (double)(ui->dsbDuration->value())*1000.0;
-		unsigned int trajSize = totalTimeMS/stepTimeMS;
-		unsigned int startIdx = 0;
-		if (ui->rbStartCurrent->isChecked())	startIdx = ui->hsStorage->value();
-		if (ui->rbStartFirst->isChecked())	startIdx = 1;
-		if (ui->rbStartLast->isChecked()) startIdx = ui->hsStorage->maximum();
-		if (ui->rbStartSpecific->isChecked()) startIdx = ui->sbStart->value();
-		unsigned int endIdx = 0;
-		if (ui->rbStopCurrent->isChecked())	endIdx = ui->hsStorage->value();
-		if (ui->rbStopFirst->isChecked())	endIdx = 1;
-		if (ui->rbStopLast->isChecked()) endIdx = ui->hsStorage->maximum();
-		if (ui->rbStopSpecific->isChecked()) endIdx = ui->sbStop->value();
-		// generate trajectory dependent on selected method
-		if (ui->rbInterpolLinear->isChecked())
-			generateLinearTrajectory(startIdx-1, endIdx-1, trajSize);
-		if (ui->rbInterpolSpline->isChecked())
-			generateSplineTrajectory(startIdx-1, endIdx-1, trajSize);
-	  //cout << endl << "generated trajectory with " << trajectory.size() << " elements, " << trajSize << " requested" << flush;
-		// start pilot
-		trajectoryIdx = 0;
-		pilot->start(stepTimeMS); // even works when trajectory is empty
-		cout << endl << "pilot takes off" << flush;
+    trajectory.clear();
+    double stepTimeMS = (double)(ui->sbStepTime->value());
+    double totalTimeMS = (double)(ui->dsbDuration->value())*1000.0;
+    unsigned int trajSize = totalTimeMS/stepTimeMS;
+    unsigned int startIdx = 0;
+    if (ui->rbStartCurrent->isChecked())  startIdx = ui->hsStorage->value();
+    if (ui->rbStartFirst->isChecked())  startIdx = 1;
+    if (ui->rbStartLast->isChecked()) startIdx = ui->hsStorage->maximum();
+    if (ui->rbStartSpecific->isChecked()) startIdx = ui->sbStart->value();
+    unsigned int endIdx = 0;
+    if (ui->rbStopCurrent->isChecked())  endIdx = ui->hsStorage->value();
+    if (ui->rbStopFirst->isChecked())  endIdx = 1;
+    if (ui->rbStopLast->isChecked()) endIdx = ui->hsStorage->maximum();
+    if (ui->rbStopSpecific->isChecked()) endIdx = ui->sbStop->value();
+    // generate trajectory dependent on selected method
+    if (ui->rbInterpolLinear->isChecked())
+      generateLinearTrajectory(startIdx-1, endIdx-1, trajSize);
+    if (ui->rbInterpolSpline->isChecked())
+      generateSplineTrajectory(startIdx-1, endIdx-1, trajSize);
+    //cout << endl << "generated trajectory with " << trajectory.size() << " elements, " << trajSize << " requested" << flush;
+    // start pilot
+    trajectoryIdx = 0;
+    pilot->start(stepTimeMS); // even works when trajectory is empty
+    cout << endl << "pilot takes off" << flush;
   } else {
-  	pilot->stop();
-  	cout << endl << "pilot landed" << flush;
+    pilot->stop();
+    cout << endl << "pilot landed" << flush;
   }
 }
 
 void VisualizerCamControl::flyToNextPos()
 {
-	if (trajectoryIdx >= trajectory.size()) {
-		ui->pbFly->setChecked(false); // this should deactivate timer
-	} else {
-		// apply current trajectory position
-		CamPos &campos = trajectory[trajectoryIdx];
-		//cout << endl << campos << flush;
-		mMav.setCameraPos(campos[0], campos[1], campos[2], campos[3], campos[4], campos[5]);
-		// apply selected camera pose to current visualization
-		update3D();
-		// increment index
-		++trajectoryIdx;
-	}
+  if (trajectoryIdx >= trajectory.size()) {
+    ui->pbFly->setChecked(false); // this should deactivate timer
+  } else {
+    // apply current trajectory position
+    CamPos &campos = trajectory[trajectoryIdx];
+    //cout << endl << campos << flush;
+    mMav.setCameraPos(campos[0], campos[1], campos[2], campos[3], campos[4], campos[5]);
+    // apply selected camera pose to current visualization
+    update3D();
+    // increment index
+    ++trajectoryIdx;
+  }
 }
 
 void VisualizerCamControl::generateLinearTrajectory(unsigned int startIdx, unsigned int endIdx, unsigned int nbTarget)
 {
-	unsigned int nbGiven = endIdx-startIdx+1;
-	unsigned int nbIntervals = nbGiven - 1;
-	unsigned int nbSubintervalsPerInterval = (nbTarget-1)/(nbIntervals); // -1 due to additional end pose
-	// ^^ priority: specified poses are exactly hit -> might result in less poses than nbTarget
-	trajectory.clear();
-	for (unsigned int i=startIdx; i<endIdx; ++i) {
-		CamPos &cPos = camPositions[i];
-		CamPos &nPos = camPositions[i+1];
-		CamPos step = (nPos-cPos)/(double)nbSubintervalsPerInterval;
-		for (unsigned int j=0; j<nbSubintervalsPerInterval; ++j) {
-			trajectory.push_back(cPos + (double)j*step);
-		}
-	}
-	trajectory.push_back(camPositions[endIdx]); // push back last pose
+  unsigned int nbGiven = endIdx-startIdx+1;
+  unsigned int nbIntervals = nbGiven - 1;
+  unsigned int nbSubintervalsPerInterval = (nbTarget-1)/(nbIntervals); // -1 due to additional end pose
+  // ^^ priority: specified poses are exactly hit -> might result in less poses than nbTarget
+  trajectory.clear();
+  for (unsigned int i=startIdx; i<endIdx; ++i) {
+    CamPos &cPos = camPositions[i];
+    CamPos &nPos = camPositions[i+1];
+    CamPos step = (nPos-cPos)/(double)nbSubintervalsPerInterval;
+    for (unsigned int j=0; j<nbSubintervalsPerInterval; ++j) {
+      trajectory.push_back(cPos + (double)j*step);
+    }
+  }
+  trajectory.push_back(camPositions[endIdx]); // push back last pose
 }
 
 

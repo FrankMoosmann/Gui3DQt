@@ -47,6 +47,7 @@ public:
 
   void registerVisualizer(Visualizer*, std::string title, MainWindow::VisualizerMode vMode = MainWindow::VM_Groupbox, bool active = true);
   MNavWidget* getQGlWidget();
+  MainWindow* getMainWindow();
   void exec();
   
 private:
