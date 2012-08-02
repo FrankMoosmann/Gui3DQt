@@ -20,7 +20,8 @@ HEADERS += \
     Visualizer.hpp \
     VisualizerPassat.hpp \
     VisualizerCamControl.hpp \
-    VisualizerGrid.hpp
+    VisualizerGrid.hpp \
+    PointCloudRenderer.hpp
 SOURCES += \
     graphics.cpp \
     model3dpassat.cpp \
@@ -33,7 +34,8 @@ SOURCES += \
     MNavWidget.cpp \
     VisualizerPassat.cpp \
     VisualizerCamControl.cpp \
-    VisualizerGrid.cpp
+    VisualizerGrid.cpp \
+    PointCloudRenderer.cpp
 FORMS += \
     VisualizerPassat.ui \
     VisualizerCamControl.ui \
