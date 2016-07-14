@@ -28,7 +28,6 @@
 
 #include <list>
 
-#define BOOST_FILESYSTEM_VERSION 2
 #include <boost/filesystem.hpp>
 
 #include <QtGui/QMainWindow>

@@ -181,7 +181,7 @@ string MainWindow::getCurrentOutputFilename()
     boost::replace_first(fName, "*", number);
     fullName = fs::path(imageOutputDirectory / fName);
   } while (exists(fullName));
-  return fullName.file_string();
+  return fullName.string();
 }
 
 void MainWindow::paintGLOpaque()

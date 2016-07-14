@@ -34,8 +34,8 @@ void Visualizer1::paintGLTranslucent()
 {
   if (ui.cbCubes->isChecked()) {
     // draw cubes with helper function
-    Gui3DQt::Graphics::draw_cube(10.0, 15.0, 10.0, 15.0, 0.2, 1.2, 0.0, 1.0, 0.5, 0.5);
-    Gui3DQt::Graphics::draw_cube(15.0, 20.0, 15.0, 20.0, 0.2, 1.2, 1.0, 0.5, 0.0, 0.5);
+    Gui3DQt::Graphics::draw_cube_solid(10.0, 15.0, 10.0, 15.0, 0.2, 1.2);
+    Gui3DQt::Graphics::draw_cube_cage(15.0, 20.0, 15.0, 20.0, 0.2, 1.2);
     // draw ellipsoid
     GLUquadricObj *quadric = gluNewQuadric();
     glColor4f(0.5, 0.0, 1.0, 0.5);

@@ -17,12 +17,12 @@ FORMS += \
   Visualizer1.ui \
   Visualizer2.ui
 
-INCLUDEPATH += . \
-   $(BOOST_INC)
+INCLUDEPATH +=
 LIBS += \
   -L.. \
-  -L$(BOOST_LIB) \
   -lGui3DQt \
   -lglut \
+  -lGLU \
+  -lboost_system \
   -lboost_thread
 

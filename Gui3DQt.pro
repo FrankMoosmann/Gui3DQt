@@ -41,9 +41,8 @@ FORMS += \
     VisualizerCamControl.ui \
     MainWindow.ui
 RESOURCES += 
-INCLUDEPATH += $(BOOST_INC)
+INCLUDEPATH +=
 LIBS += \
-    -L$(BOOST_LIB) \
     -lboost_filesystem \
     -lboost_system \
     -lglut
