@@ -30,19 +30,20 @@
 
 #include <boost/filesystem.hpp>
 
-#include <QtGui/QMainWindow>
-#include <QtGui/QBoxLayout>
+#include <QtWidgets/QMainWindow>
+#include <QtWidgets/QBoxLayout>
 #include <QScrollBar>
 #include <QGroupBox>
 
-#include "MNavWidget.hpp"
 #include "Visualizer.hpp"
+#include "MNavWidget.hpp"
 
 namespace Ui { class MainWindowClass; } // forward declaration to avoid including the ui_ header
 
 
 namespace Gui3DQt {
 
+ 
 /*!
   \class MainWindow
   \brief Provides a modular framework for 2D and 3D data display.

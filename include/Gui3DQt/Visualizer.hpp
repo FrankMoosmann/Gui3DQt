@@ -26,7 +26,7 @@
 #ifndef GUI3DQT_VISUALIZER_HPP_
 #define GUI3DQT_VISUALIZER_HPP_
 
-#include <QtGui/QWidget>
+#include <QtWidgets/QWidget>
 #include <QColor>
 #include <GL/glut.h>
 

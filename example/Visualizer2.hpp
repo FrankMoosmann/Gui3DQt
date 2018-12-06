@@ -12,7 +12,7 @@
 #ifndef VISUALIZER2_HPP
 #define VISUALIZER2_HPP
 
-#include <QtGui/QWidget>
+#include <QtWidgets/QWidget>
 #include <Gui3DQt/Visualizer.hpp>
 #include "ui_Visualizer2.h"
 

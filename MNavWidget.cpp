@@ -19,15 +19,16 @@
  *              You should have received a copy of the GNU General Public License
  *              along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "MNavWidget.hpp"
+#include "Gui3DQt/MNavWidget.hpp"
 
-#include <QtGui>
-#include <QtOpenGL>
+#include <QtWidgets>
+//#include <QtOpenGL>
 #include <QSizePolicy>
 #include <math.h>
 #include <iostream>
-#include "graphics.hpp"
 #include <GL/glu.h>
+
+#include "Gui3DQt/graphics.hpp"
 
 #define DEFAULT_ZOOM_SENSITIVITY             0.002
 #define DEFAULT_ROTATE_SENSITIVITY           0.30

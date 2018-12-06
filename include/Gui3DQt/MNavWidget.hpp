@@ -27,7 +27,7 @@
 #ifndef GUI3DQT_MNAVWIDGET_HPP_
 #define GUI3DQT_MNAVWIDGET_HPP_
 
-#include <QtGui/QWidget>
+#include <QtWidgets/QWidget>
 #include <QtOpenGL/QGLWidget>
 #include <boost/function.hpp>
 

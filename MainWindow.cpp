@@ -19,7 +19,7 @@
  *              You should have received a copy of the GNU General Public License
  *              along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "MainWindow.hpp"
+#include "Gui3DQt/MainWindow.hpp"
 
 #include <iostream>
 #include <GL/glut.h>
@@ -32,6 +32,7 @@
 #include <boost/format.hpp>
 #include <boost/bind.hpp>
 
+#include "Gui3DQt/MNavWidget.hpp"
 #include "ui_MainWindow.h"
 
 using namespace std;

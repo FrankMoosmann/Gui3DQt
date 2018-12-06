@@ -19,9 +19,9 @@
  *              You should have received a copy of the GNU General Public License
  *              along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "Gui.hpp"
+#include "Gui3DQt/Gui.hpp"
 
-#include <QtGui/QApplication>
+#include <QtWidgets/QApplication>
 #include <QtCore/QString>
 
 using namespace std;

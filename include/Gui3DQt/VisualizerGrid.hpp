@@ -26,7 +26,7 @@
 #ifndef GUI3DQT_VISUALIZERGRID_HPP_
 #define GUI3DQT_VISUALIZERGRID_HPP_
 
-#include <QtGui/QWidget>
+#include <QtWidgets/QWidget>
 #include "Visualizer.hpp"
 
 namespace Gui3DQt {

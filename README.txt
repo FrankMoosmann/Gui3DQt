@@ -20,15 +20,10 @@ boost-....
 
 Compilation
 ===========
-1) auto-create Makefile by "qmake-qt4 Gui3DQt.pro"
-2) compile with "Make"
-
-Installation
-============
-Just call the script "install.sh" with the destination directory as argument.
-The destination thereby has to include the subdirectories "lib" and "include".
-Of course, write access must be possible. E.g.:
-"sudo ./install.sh /usr/local"
+1) mkdir build
+2) cd build
+3) cmake ..
+4) make
 
 Usage
 =====
@@ -38,4 +33,3 @@ Usage
 In general, you should be familiar with Qt and OpenGL. If no, visit e.g. these pages:
 http://doc.qt.nokia.com/stable/tutorials.html
 http://wiki.delphigl.com/index.php/GlBegin (intended for Delphi, but same syntax in C++)
-
