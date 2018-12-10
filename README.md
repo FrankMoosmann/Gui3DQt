@@ -1,6 +1,5 @@
+# Gui3DQt
 
-Description
-===========
 This package provides some classes helping to create a Gui for visualizing 3D content with OpenGL 
 - QGlMNavWidget is a QGLWidget (provides OpenGL context) extended with mouse navigation. Can be used within any custom Gui/QWidget
 - Gui3DMainWindow implements a main windows with a QGlMNavWidget and a docking area for visualization modules
@@ -10,23 +9,17 @@ This package provides some classes helping to create a Gui for visualizing 3D co
 - Gui3DVisualizerGrid is a tiny visualization module displaying a grid in the horizontal plane
 - graphics provides some paint functions, not directly included in OpenGL (circles, etc)
 
-Prerequisites
-=============
-libqt4
+## Prerequisites
+libqt5
+boost
 
-boost-function
-boost-numeric-ublas
-boost-....
-
-Compilation
-===========
+## Compilation
 1) mkdir build
 2) cd build
 3) cmake ..
 4) make
 
-Usage
-=====
+## Usage
 - Either just include a MNavWidget into your own Gui and provide OpenGL paint functions to it
 - Or create your own visualization modules for usage in a MainWindow (see VisualizerGrid or example/Visualizer*)
 
