@@ -24,7 +24,7 @@
 #include <iostream>
 #include <cmath>
 
-#include "passatmodel.hpp"
+#include "Gui3DQt/passatmodel.hpp"
 #include "ui_VisualizerPassat.h"
 
 using namespace std;

@@ -19,7 +19,7 @@
  *              You should have received a copy of the GNU General Public License
  *              along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "passatmodel.hpp"
+#include "Gui3DQt/passatmodel.hpp"
 
 #include <cmath>
 #include <stdexcept>

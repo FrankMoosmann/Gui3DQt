@@ -1,4 +1,4 @@
-#include "PointCloudRenderer.hpp"
+#include "Gui3DQt/PointCloudRenderer.hpp"
 
 namespace Gui3DQt {
 

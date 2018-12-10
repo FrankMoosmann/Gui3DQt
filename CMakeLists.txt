@@ -9,23 +9,18 @@ set(CMAKE_AUTOMOC ON)
 # Create code from a list of Qt designer ui files
 set(CMAKE_AUTOUIC ON)
 
-find_package(Boost COMPONENTS system filesystem REQUIRED)
-
+find_package(Boost REQUIRED COMPONENTS system filesystem)
 find_package(OpenGL REQUIRED)
-
 find_package(Qt5 REQUIRED COMPONENTS Widgets Core OpenGL)
-
 find_package(GLUT REQUIRED)
-
-include_directories(
-  ${CMAKE_CURRENT_LIST_DIR}/include
-)
 
 add_library(${PROJECT_NAME} 
     include/Gui3DQt/graphics.hpp
     include/Gui3DQt/Gui.hpp
     include/Gui3DQt/MainWindow.hpp
     include/Gui3DQt/MNavWidget.hpp
+    include/Gui3DQt/passatmodel.hpp
+    include/Gui3DQt/PointCloudRenderer.hpp
     include/Gui3DQt/Visualizer.hpp
     include/Gui3DQt/VisualizerCamControl.hpp
     include/Gui3DQt/VisualizerGrid.hpp
@@ -40,9 +35,7 @@ add_library(${PROJECT_NAME}
     model3dpassatwagon.cpp
     model3dtire.cpp
     model3dvelodyne.cpp
-    passatmodel.hpp
     passatmodel.cpp
-    PointCloudRenderer.hpp
     PointCloudRenderer.cpp
     spline.hpp
     VisualizerCamControl.cpp
@@ -54,9 +47,12 @@ add_library(${PROJECT_NAME}
 
 qt5_use_modules(${PROJECT_NAME} Widgets Core OpenGL)
 
+target_include_directories(${PROJECT_NAME} PUBLIC
+    ${CMAKE_CURRENT_LIST_DIR}/include
+)
+
 target_link_libraries(${PROJECT_NAME} 
-    ${Boost_FILESYSTEM_LIBRARY}
-    ${Boost_SYSTEM_LIBRARY}
+    ${Boost_LIBRARIES}
     ${OPENGL_LIBRARIES}
     ${GLUT_LIBRARIES}
 )
